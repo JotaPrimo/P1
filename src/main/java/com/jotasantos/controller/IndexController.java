@@ -66,15 +66,8 @@ public class IndexController extends HttpServlet {
 	}
 
 	protected void novoUsuario(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, ClassNotFoundException {
+			throws ServletException, IOException, ClassNotFoundException {		
 		
-		Connection connection = Conexao.getConexao();
-		
-		if ( connection != null ) {
-			System.out.println("Conexao criada");
-		} else {
-			System.out.println("Conexao nulçl");
-		}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/public/public-novo-usuario.jsp");
 		dispatcher.forward(request, response);
