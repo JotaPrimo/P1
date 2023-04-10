@@ -10,11 +10,10 @@ import java.sql.Statement;
 import com.jotasantos.dao.util.Conexao;
 import com.jotasantos.modelo.Usuario;
 
-
 public class UsuarioDAO {
-	
-private Connection connection;
-	
+
+	private Connection connection;
+
 	private void conectar() throws SQLException, ClassNotFoundException {
 		if (connection == null || connection.isClosed()) {
 			connection = Conexao.getConexao();
@@ -26,11 +25,11 @@ private Connection connection;
 			connection.close();
 		}
 	}
-	
+
 	public Usuario inserirUsuario(Usuario usuario) throws SQLException, ClassNotFoundException {
 		String sql = "INSERT INTO usuario (nome, cpf, data_nascimento, email, password, login, ativo)"
-				+ " VALUES (?, ?, ?, ?, ?, ?, ?)";		    
-		
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?)";
+
 		conectar();
 
 		PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -42,21 +41,19 @@ private Connection connection;
 		statement.setString(5, usuario.getPassword());
 		statement.setString(6, usuario.getLogin());
 		statement.setBoolean(7, usuario.isAtivo());
-		
+
 		statement.executeUpdate();
-		
+
 		ResultSet resultSet = statement.getGeneratedKeys();
 		long id = -1;
-		
-		if(resultSet.next())
-			id = resultSet.getInt(1);		
+
+		if (resultSet.next())
+			id = resultSet.getInt(1);
 		statement.close();
 
 		desconectar();
-		
+
 		usuario.setId(id);
 		return usuario;
 	}
-
-
 }
