@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -56,6 +57,10 @@ public class IndexController extends HttpServlet {
 			case "inserir":
 				this.gravarUsuario(request, response);
 				break;
+				
+			case "listar":
+				this.listarUsuarios(request, response);
+				break;
 
 			default:
 				break;
@@ -91,9 +96,20 @@ public class IndexController extends HttpServlet {
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("public/public-novo-usuario.jsp");
 		request.setAttribute("mensagem", "Usuário cadastrado com sucesso");
+		dispatcher.forward(request, response);		
+	}
+	
+	public void listarUsuarios(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, ServletException, IOException {
+		
+		List<Usuario> usuarios =  usuarioDAO.listarTodosUsuarios();
+		
+		request.setAttribute("listaUsuarios", usuarios);
+		
+		String path =  "/public/listar-usuarios.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+		
 		dispatcher.forward(request, response);
 
-		
 	}
 
 }

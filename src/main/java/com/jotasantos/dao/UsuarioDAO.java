@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+import java.util.ArrayList;
 
 import com.jotasantos.dao.util.Conexao;
 import com.jotasantos.modelo.Usuario;
@@ -56,4 +58,39 @@ public class UsuarioDAO {
 		usuario.setId(id);
 		return usuario;
 	}
+
+public List<Usuario> listarTodosUsuarios() throws SQLException, ClassNotFoundException {
+		
+		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+
+		String sql = "SELECT * FROM usuario";
+
+		this.conectar();
+
+		Statement statement = connection.createStatement();
+		ResultSet resultSet = statement.executeQuery(sql);
+
+		while (resultSet.next()) {
+			long id = resultSet.getLong("id");
+			String nome = resultSet.getString("nome");
+			String cpf = resultSet.getString("cpf");
+			Date nascimento = new Date(resultSet.getDate("data_nascimento").getTime());
+			String email = resultSet.getString("email");
+			String password = resultSet.getString("password");
+			String login = resultSet.getString("login");
+			boolean ativo = resultSet.getBoolean("ativo");
+
+			Usuario usuario = new Usuario(nome, cpf, nascimento, email, password, login, ativo);
+			usuario.setId(id);
+			listaUsuarios.add(usuario);
+		}
+		resultSet.close();
+		statement.close();
+
+		desconectar();
+
+		return listaUsuarios;
+	}
+
+
 }
