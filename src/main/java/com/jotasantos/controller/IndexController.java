@@ -1,9 +1,7 @@
 package com.jotasantos.controller;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,17 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jotasantos.controller.util.ManipulacaoData;
-import com.jotasantos.dao.UsuarioDAO;
-import com.jotasantos.dao.util.Conexao;
-import com.jotasantos.modelo.Usuario;
+import com.jotasantos.dao.EnderecoDAO;
+import com.jotasantos.modelo.Endereco;
 
 
 @WebServlet("/publica")
 public class IndexController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private UsuarioDAO usuarioDAO;
+	private EnderecoDAO enderecoDAO;
 
 	public IndexController() {
 		super();
@@ -31,7 +27,7 @@ public class IndexController extends HttpServlet {
 	}
 
 	public void init() {
-		usuarioDAO = new UsuarioDAO();
+		enderecoDAO = new EnderecoDAO();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -51,15 +47,15 @@ public class IndexController extends HttpServlet {
 		try {
 			switch (acao) {
 			case "novo":
-				this.novoUsuario(request, response);
+				this.novoEndereco(request, response);
 				break;
 
 			case "inserir":
-				this.gravarUsuario(request, response);
+				this.gravarEndereco(request, response);
 				break;
 				
 			case "listar":
-				this.listarUsuarios(request, response);
+				this.listarEnderecos(request, response);
 				break;
 
 			default:
@@ -70,42 +66,39 @@ public class IndexController extends HttpServlet {
 		}
 	}
 
-	protected void novoUsuario(HttpServletRequest request, HttpServletResponse response)
+	protected void novoEndereco(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ClassNotFoundException {		
 		
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/public/public-novo-usuario.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/public/public-novo-endereco.jsp");
 		dispatcher.forward(request, response);
 	}
 
-	protected void gravarUsuario(HttpServletRequest request, HttpServletResponse response)
+	protected void gravarEndereco(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
-		String nome = request.getParameter("nome");
-		String cpf = request.getParameter("cpf");
-		String nascimento = request.getParameter("dataNascimento");
-		String email = request.getParameter("email");
-		String login = request.getParameter("login");
-		String senha = request.getParameter("senha");
-
-		ManipulacaoData manipulacaoData = new ManipulacaoData();
-		Date dataNascimento = manipulacaoData.converterStringData(nascimento);
-
-		Usuario usuario = new Usuario(nome, cpf, dataNascimento, email, senha, login, true);
 		
-		Usuario usuarioGravado =  usuarioDAO.inserirUsuario(usuario);
+		String logradouro = request.getParameter("logradouro");
+		String cidade = request.getParameter("cidade");		
+		String bairro = request.getParameter("bairro");		
+		String numero = request.getParameter("numero");
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("public/public-novo-usuario.jsp");
-		request.setAttribute("mensagem", "Usuário cadastrado com sucesso");
+
+		Endereco endereco = new Endereco(logradouro, cidade, bairro, Integer.parseInt(numero));
+		
+		Endereco enderecoGravado =  enderecoDAO.inserirEndereco(endereco);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("public/public-novo-endereco.jsp");
+		request.setAttribute("mensagem", "Endereço cadastrado com sucesso");
 		dispatcher.forward(request, response);		
 	}
 	
-	public void listarUsuarios(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, ServletException, IOException {
+	public void listarEnderecos(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, ServletException, IOException {
 		
-		List<Usuario> usuarios =  usuarioDAO.listarTodosUsuarios();
+		List<Endereco> enderecos =  enderecoDAO.listarTodosEnderecos();
 		
-		request.setAttribute("listaUsuarios", usuarios);
+		request.setAttribute("listaEnderecos", enderecos);
 		
-		String path =  "/public/listar-usuarios.jsp";
+		String path =  "/public/listar-enderecos.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
 		
 		dispatcher.forward(request, response);

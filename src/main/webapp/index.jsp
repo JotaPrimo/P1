@@ -19,13 +19,13 @@
 </head>
 <body>
 	
-	<!-- barra de navegação -->
-	<jsp:include page="/public/public-nav.jsp"></jsp:include>
-	
 	<!-- container -->
 	<div class="container">
 		<div class="row">
-			<div class="col">
+			<div class="col mt-5">
+			<!-- barra de navegação -->
+				<a class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/publica?acao=novo">Novo Endereco</a>
+				<a class="btn btn-sm btn-success" href="${pageContext.request.contextPath}/publica?acao=listar">Listar Endereços</a>
 				<h2>Index</h2>
 			</div>
 		</div>

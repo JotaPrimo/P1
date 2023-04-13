@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Usuários</title>
+<title>Endereços</title>
 
 
 <link
@@ -21,13 +21,11 @@
 
 
 </head>
-<body>
-
-	<jsp:include page="/public/public-nav.jsp" />
+<body>	
 
 	<div class="container">
 		<div class="mt-5 d-flex justify-content-end">
-			<a class="btn btn-primary" href="${pageContext.request.contextPath}/publica?acao=novo">Novo usuário</a>
+			<a class="btn btn-primary" href="${pageContext.request.contextPath}/publica?acao=novo">Novo endereço</a>
 		</div>
 		
 		<div class="col-12 mt-2">
@@ -38,26 +36,20 @@
 					<thead>
 						<tr>
 							<th>Id</th>
-							<th>Nome</th>
-							<th>Cpf</th>
-							<th>Nascimento</th>
-							<th>E-mail</th>
-							<th>Ativado?</th>
+							<th>Logradouro</th>
+							<th>Cidade</th>
+							<th>Bairro</th>		
+							<th>Número</th>							
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="usuario" items="${listaUsuarios}">
+						<c:forEach var="endereco" items="${listaEnderecos}">
 							<tr>
-								<td><c:out value="${usuario.id}" /></td>
-								<td><c:out value="${usuario.nome}" /></td>
-								<td><c:out value="${usuario.cpf}" /></td>
-								<td><fmt:formatDate value='${usuario.dataNascimento}'
-										type='date' pattern='dd/MM/yyyy' /></td>
-								<td><c:out value="${usuario.email}" /></td>
-
-								<td>									
-									<span> <c:out value= "${usuario.ativo=='true' ? 'ATIVO' : 'NÃO ATIVO'}" /> </span>
-								</td>							
+								<td><c:out value="${endereco.id}" /></td>
+								<td><c:out value="${endereco.logradouro}" /></td>
+								<td><c:out value="${endereco.cidade}" /></td>								
+								<td><c:out value="${endereco.bairro}" /></td>
+								<td><c:out value="${endereco.numero}" /></td>															
 							
 							</tr>
 						</c:forEach>
