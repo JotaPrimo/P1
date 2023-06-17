@@ -58,7 +58,7 @@ public class EnderecoDAO {
 
 		List<Endereco> listaEnderecos = new ArrayList<Endereco>();
 
-		String sql = "SELECT * FROM endereco";
+		String sql = "SELECT * FROM endereco ORDER BY logradouro ASC";
 
 		this.conectar();
 

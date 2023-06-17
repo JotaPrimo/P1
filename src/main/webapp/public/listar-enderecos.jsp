@@ -58,12 +58,38 @@
 										<td><a class="btn btn-sm btn-warning"
 											href="${pageContext.request.contextPath}/publica?acao=formEditar&id=<c:out value="${endereco.id}" />"
 											title="Clique aqui para editar"> Editar </a></td>
-										<td><a class="btn btn-sm btn-danger"
-											onclick="return confirm('Você deseja apagar?');"
-											href="${pageContext.request.contextPath}/publica?acao=apagar&id=<c:out value="${endereco.id}" />">
-												Apagar </a></td>
+										<td>
+											<button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete<c:out value="${endereco.id}" />">
+												Apagar
+										    </button>
+										</td>
 
 									</tr>
+									
+										<!-- MODAL DELETE -->	
+										<div class="modal fade" id="modalDelete<c:out value="${endereco.id}" />" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+										  <div class="modal-dialog">
+										    <div class="modal-content">
+										    <form action="${pageContext.request.contextPath}/publica?acao=apagar&id=<c:out value="${endereco.id}" />" method="POST">
+										    
+										      <div class="modal-header">
+										        <h1 class="modal-title fs-5" id="exampleModalLabel">Atenção</h1>
+										        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										      </div>
+										      <div class="modal-body">
+										        Deletar o endereço <c:out value="${endereco.logradouro}" /> ?
+										      </div>
+										      <div class="modal-footer">
+										        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+										        <button type="submit" class="btn btn-primary btn-sm">Sim, deletar</button>
+										      </div>
+										    </form>
+										    </div>
+										  </div>
+										</div>
+										<!-- END MODAL DELETE -->
+	
+	
 								</c:forEach>
 							</tbody>
 						</table>
@@ -72,5 +98,7 @@
 			</div>
 		</div>
 	</div>
+	
+
 </body>
 </html>
