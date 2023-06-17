@@ -25,7 +25,7 @@
 
 	<div class="container">
 		<div class="mt-5 d-flex justify-content-end">
-			<a class="btn btn-primary" href="${pageContext.request.contextPath}/publica?acao=novo">Novo endereço</a>
+			<a class="btn btn-primary" href="${pageContext.request.contextPath}/publica?acao=novo">Novo</a>
 		</div>
 		
 		<div class="col-12 mt-2">
@@ -49,7 +49,22 @@
 								<td><c:out value="${endereco.logradouro}" /></td>
 								<td><c:out value="${endereco.cidade}" /></td>								
 								<td><c:out value="${endereco.bairro}" /></td>
-								<td><c:out value="${endereco.numero}" /></td>															
+								<td><c:out value="${endereco.numero}" /></td>
+								<td>
+									<a 
+										class="btn btn-sm btn-warning" 
+										href="${pageContext.request.contextPath}/publica?acao=formEditar&id=<c:out value="${endereco.id}" />"
+										title="Clique aqui para editar">
+										Editar
+									</a>
+								</td>															
+								<td> 																			
+									<a class="btn btn-sm btn-danger"
+										onclick="return confirm('Você deseja apagar?');"
+										href="${pageContext.request.contextPath}/publica?acao=apagar&id=<c:out value="${endereco.id}" />">
+										Apagar
+									</a>
+								</td>
 							
 							</tr>
 						</c:forEach>

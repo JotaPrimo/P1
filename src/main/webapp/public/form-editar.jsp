@@ -25,7 +25,7 @@
 		<div class="row mt-5">	
 			
 			<div class="col">
-				<h2>Cadastro de Endereço</h2>
+				<h2>Editar endereço</h2>
 				
 				<c:if test="${mensagem != null}">
 				 	<div class="alert alert-success alert-dismissible fade show">
@@ -37,17 +37,18 @@
 				
 				<div class="card">
 					<div class="card-body">
-						<form action="${pageContext.request.contextPath}/publica?acao=inserir" method="POST">
+						<form action="${pageContext.request.contextPath}/publica?acao=update" method="POST">
+							<input type="text" name="id" value="<c:out value='${endereco.id}' />" /> 
 							<div class="mb-3">
 								<div class="row">
 									<div class="col-md-6 col-sm-12 mb-3">
-										<label for="exampleInputBairro1" class="form-label">Logradouro</label>
-										<input type="text" name="logradouro" required placeholder="Logradouro" minlength="3" maxlength="150" class="form-control">
+										<label for="logradouro" class="form-label">Logradouro</label>
+										<input type="text" name="logradouro" value="<c:out value='${endereco.logradouro}' />" required placeholder="Logradouro" minlength="3" maxlength="150" class="form-control">
 									</div>
 
 									<div class="col-md-6 col-sm-12 mb-3">
-										<label for="exampleInputBairro1" class="form-label">Cidade</label>
-										<input type="text" class="form-control" name="cidade" required placeholder="Cidade" minlength="5" maxlength="200">
+										<label for="cidade" class="form-label">Cidade</label>
+										<input type="text" class="form-control" value="<c:out value='${endereco.cidade}' />" name="cidade" required placeholder="Cidade" minlength="5" maxlength="200">
 									</div>
 									
 								</div>
@@ -55,19 +56,19 @@
 
 								<div class="row">
 									<div class="col-md-6 col-sm-12 mb-3">
-										<label for="exampleInputBairro1" class="form-label">Bairro</label>
-										<input type="text" class="form-control" name="bairro" required placeholder="Bairro" minlength="3" maxlength="50">
+										<label for="bairro" class="form-label">Bairro</label>
+										<input type="text" class="form-control" value="<c:out value='${endereco.bairro}' />" name="bairro" required placeholder="Bairro" minlength="3" maxlength="50">
 									</div>
 									
 
 									<div class="col-md-6 col-sm-12 mb-3">
 										<label for="exampleInputBairro1" class="form-label">Número</label>
-										<input type="number" class="form-control" name="numero" required placeholder="Numero" min="1" max="155550">
+										<input type="number" class="form-control" value="<c:out value='${endereco.numero}' />" name="numero" required placeholder="Numero" min="1" max="155550">
 									</div>
 
 								</div>
 
-								<button type="submit" class="btn btn-primary">Gravar</button>
+								<button type="submit" class="btn btn-primary">Atualizar</button>
 						</form>
 					</div>
 				</div>

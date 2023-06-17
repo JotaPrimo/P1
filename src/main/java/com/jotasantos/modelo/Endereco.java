@@ -8,7 +8,7 @@ import java.util.Date;
   `logradouro` varchar(255) DEFAULT NULL, 
   `cidade` varchar(255) DEFAULT NULL,
   `bairro` varchar(255) DEFAULT NULL,
-  `numero` varchar(255) DEFAULT NULL,
+  `numero` Integer DEFAULT NULL,
   PRIMARY KEY (`id`)
 )
  * */

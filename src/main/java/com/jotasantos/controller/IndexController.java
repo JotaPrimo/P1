@@ -56,6 +56,18 @@ public class IndexController extends HttpServlet {
 				
 			case "listar":
 				this.listarEnderecos(request, response);
+				break;	
+				
+			case "apagar":
+				this.apagarEndereco(request, response);
+				break;
+				
+			case "formEditar":
+				this.formEditarEndereco(request, response);
+				break;
+				
+			case "update":
+				this.updateEndereco(request, response);
 				break;
 
 			default:
@@ -87,9 +99,10 @@ public class IndexController extends HttpServlet {
 		
 		Endereco enderecoGravado =  enderecoDAO.inserirEndereco(endereco);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("public/public-novo-endereco.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("public/listar-endereco.jsp");
 		request.setAttribute("mensagem", "Endereço cadastrado com sucesso");
-		dispatcher.forward(request, response);		
+		this.listarEnderecos(request, response);
+		// dispatcher.forward(request, response);		
 	}
 	
 	public void listarEnderecos(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, ServletException, IOException {
@@ -104,5 +117,48 @@ public class IndexController extends HttpServlet {
 		dispatcher.forward(request, response);
 
 	}
+
+	private void apagarEndereco(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException, ClassNotFoundException {
+			
+			long id = Long.parseLong(request.getParameter("id"));
+			
+			Endereco endereco = new Endereco();
+			endereco.setId(id);
+			enderecoDAO.apagarEndereco(endereco);
+			
+			String path = request.getContextPath() + request.getServletPath() + "?acao=listar";
+			response.sendRedirect(path);
+			
+		}
+	
+	private void formEditarEndereco(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException, ClassNotFoundException {
+		
+		long id = Long.parseLong(request.getParameter("id"));
+		Endereco endereco = enderecoDAO.buscarEnderecoPorId(id);	
+	
+		request.setAttribute("endereco", endereco);		
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/public/form-editar.jsp");
+				
+		dispatcher.forward(request, response);
+		
+	}
+	
+	private void updateEndereco(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, IOException {
+		
+		int id = Integer.parseInt(request.getParameter("id"));		
+				
+		Endereco endereco = enderecoDAO.buscarEnderecoPorId(id);	
+		endereco.setLogradouro(request.getParameter("logradouro"));
+		endereco.setCidade(request.getParameter("cidade"));		
+		endereco.setBairro(request.getParameter("bairro"));		
+		endereco.setNumero(Integer.parseInt(request.getParameter("numero")));	
+		
+		enderecoDAO.editarEndereco(endereco);
+		
+		String path = request.getContextPath() + request.getServletPath() + "?acao=listar";
+		response.sendRedirect(path);
+	}	
+
 
 }

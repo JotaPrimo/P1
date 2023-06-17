@@ -84,4 +84,76 @@ public class EnderecoDAO {
 		return listaEnderecos;
 	}
 
+	public boolean apagarEndereco(Endereco endereco) throws SQLException, ClassNotFoundException {
+        String sql = "DELETE FROM endereco where id = ?";
+        
+        conectar();
+         
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setLong(1, endereco.getId());
+         
+        boolean linhaApagada = statement.executeUpdate() > 0;
+        statement.close();
+        
+        desconectar();
+        
+        return linhaApagada;     
+   }
+	
+	public Endereco buscarEnderecoPorId(long id) throws ClassNotFoundException, SQLException {		
+		Endereco endereco = null;
+        String sql = "SELECT * FROM endereco WHERE id = ?";
+         
+        conectar();
+         
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setLong(1, id);
+         
+        ResultSet resultSet = statement.executeQuery();
+         
+        if (resultSet.next()) {
+        	
+        	String logradouro = resultSet.getString("logradouro");
+			String cidade = resultSet.getString("cidade");
+			String bairro = resultSet.getString("bairro");
+			Integer numero = resultSet.getInt("numero");			
+
+			endereco = new Endereco(logradouro, cidade, bairro, numero);
+			endereco.setId(id);		
+			System.out.println("Setou id na busca");
+			
+		}
+         
+        resultSet.close();
+        statement.close();
+        
+        desconectar();        
+        return endereco;
+
+	}
+	
+	public boolean editarEndereco(Endereco endereco) throws SQLException, ClassNotFoundException {
+		String sql = "UPDATE endereco SET logradouro= ?, cidade= ?, bairro= ?, numero = ? WHERE id= ?";	    
+					    
+		
+		conectar();
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, endereco.getLogradouro());
+		statement.setString(2, endereco.getCidade());
+		statement.setString(3, endereco.getBairro());
+		statement.setInt(4, endereco.getNumero());
+		statement.setLong(5, endereco.getId());
+		
+		statement.execute();		
+				
+		statement.close();
+
+		desconectar();
+		return true;
+
+	}
+
+
+	
 }
