@@ -18,11 +18,18 @@
 </head>
 
 <body>
+
+<jsp:include page="/public/components/nav-bar.jsp" />
+
 	<!-- container -->
 	<div class="container">
-		<a class="mt-5 btn btn-sm btn-success" href="${pageContext.request.contextPath}/publica?acao=listar">Listar</a>
+	
+	<div class="card shadow mt-5 bg-body">
+  		<div class="card-body">
+  
+		<a class="btn btn-sm btn-success" href="${pageContext.request.contextPath}/publica?acao=listar">Listar</a>
 
-		<div class="row mt-5">	
+		<div class="row">	
 			
 			<div class="col">
 				<h2>Editar endereço</h2>
@@ -34,11 +41,8 @@
 				</div>
 				</c:if>	
 				
-				
-				<div class="card">
-					<div class="card-body">
-						<form action="${pageContext.request.contextPath}/publica?acao=update" method="POST">
-							<input type="text" name="id" value="<c:out value='${endereco.id}' />" /> 
+				<form action="${pageContext.request.contextPath}/publica?acao=update" method="POST">
+							<input type="hidden" name="id" value="<c:out value='${endereco.id}' />" /> 
 							<div class="mb-3">
 								<div class="row">
 									<div class="col-md-6 col-sm-12 mb-3">
@@ -70,10 +74,12 @@
 
 								<button type="submit" class="btn btn-primary">Atualizar</button>
 						</form>
-					</div>
-				</div>
+					
 			</div>
 		</div>
+	
+		</div>
+	</div>
 	</div>
 </body>
 </html>

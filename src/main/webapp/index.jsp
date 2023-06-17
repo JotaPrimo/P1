@@ -18,6 +18,8 @@
 
 </head>
 <body>
+
+	<jsp:include page="/public/components/nav-bar.jsp" />
 	
 	<!-- container -->
 	<div class="container">
